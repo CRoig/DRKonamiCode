@@ -5,7 +5,7 @@
 //  Created by Danny Ricciotti on 3/4/12.
 //
 
-#import "DRKonamiGestureRecognizer.h"
+#import <DRKonamiCode/DRKonamiCode.h>
 
 @interface DRViewController : UIViewController <DRKonamiGestureProtocol>
 {
@@ -19,7 +19,8 @@
 
 @property (weak, nonatomic, readonly) IBOutlet UIView *NESControllerView;
 @property (weak, nonatomic, readonly) IBOutlet UILabel *statusLabel;
-@property (weak, nonatomic, readonly) IBOutlet UILabel *guideLabel;
+@property (weak, nonatomic, readwrite) IBOutlet UILabel *guideLabel;
+
 @property (nonatomic, readonly) DRKonamiGestureRecognizer* konamiGestureRecognizer;
 
 - (IBAction)aButtonWasPressed:(id)sender;

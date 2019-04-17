@@ -9,7 +9,7 @@
 
 @interface DRViewController()
 - (void)_konamiGestureRecognized:(DRKonamiGestureRecognizer*)gesture;
-@property (nonatomic) UILabel *nesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nesLabel;
 @end
 
 #pragma mark -
@@ -34,18 +34,11 @@ static NSString * konamiProgressString = @"↑↑↓↓←→←→BA";
     [self.konamiGestureRecognizer setKonamiDelegate:self];
     [self.konamiGestureRecognizer setRequiresABEnterToUnlock:YES];
     [self.view addGestureRecognizer:self.konamiGestureRecognizer];
-    
-    if ( !self.nesLabel )
-    {
-        UILabel *nesLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.NESControllerView.frame), CGRectGetWidth(self.view.bounds)-20, 66)];
-        nesLabel.text = @"Hit B, then A, then the enter button (right button in middle of NES controller) to finish Konami sequence.";
-        nesLabel.numberOfLines = 0;
-        [nesLabel setFont:[UIFont systemFontOfSize:15]];
-        nesLabel.textAlignment = NSTextAlignmentCenter;
-        [self.view addSubview:nesLabel];
-        nesLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
-        self.nesLabel = nesLabel;
-    }
+
+    self.nesLabel.text = @"Hit B, then A, then the enter button (right button in middle of NES controller) to finish Konami sequence.";
+    self.nesLabel.numberOfLines = 0;
+    [self.nesLabel setFont:[UIFont systemFontOfSize:15]];
+    self.nesLabel.textAlignment = NSTextAlignmentCenter;
     
     // initially hidden. Shown when user has completed the Konami sequence up to the A+B+Enter part.
     self.NESControllerView.alpha = 0;
@@ -55,11 +48,10 @@ static NSString * konamiProgressString = @"↑↑↓↓←→←→BA";
     self.statusLabel.text = nil;
 }
 
-- (void)viewDidUnload
+- (void)dealloc
 {
     [self.view removeGestureRecognizer:self.konamiGestureRecognizer];
     _konamiGestureRecognizer = nil;
-    [super viewDidUnload];
 }
 
 #pragma mark -
@@ -126,8 +118,11 @@ static NSString * konamiProgressString = @"↑↑↓↓←→←→BA";
 {
     if ( gesture.state == UIGestureRecognizerStateRecognized )
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Konami!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Dismiss",nil];
-        [alert show];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"Konami!" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *close = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:close];
+        
+        [self presentViewController:alert animated:YES completion:nil];
     }
     else if ( gesture.state == UIGestureRecognizerStateChanged )
     {

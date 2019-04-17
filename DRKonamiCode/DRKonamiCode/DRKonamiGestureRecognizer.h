@@ -5,6 +5,9 @@
 //  Created by Danny Ricciotti on 3/4/12.
 //
 
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 /**
  The delegate (DRKonamiGestureProtocol) is optional! If you are using the delegate, however, then you must implement all of the required methods. The delegate is only needed if you wish to include A+B+Enter as the final steps of the Konami sequence.
  The Konami Gesture protocol implements communication between the gesture recognizer and the delegate when the A+B+Enter action is required to complete the gesture. If the A+B+Enter sequence is not used then none of the protocol methods are required.

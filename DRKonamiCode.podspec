@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.author   = { "Danny Ricciotti" => "dan.ricciotti@gmail.com" }
 
   s.source   = { :git => 'https://github.com/objectiveSee/DRKonamiCode.git', :tag=>'v1.1.1' }
-  s.source_files = 'Sources/DRKonamiGestureRecognizer.*'
+  s.source_files = 'DRKonamiCode/DRKonamiCode/DRKonamiGestureRecognizer.*'
 
   s.requires_arc = true
 end
